@@ -1,4 +1,5 @@
 #include<iostream>
+
 //#include<>
 
 
@@ -7,45 +8,50 @@ const int NUM_ROWS{ 10 };
 const int NUM_COLUMNS{ 10 };
 int x; //numero bloques
 
+//enum class componentes {bloque,bola,borde_horizontal,borde_vertical,jugador,vacio};
 
+char **board;
 
-enum class componentes {bloque,bola,borde_inferior,borde_lateral,jugador,vacio};
-
-componentes board[NUM_ROWS][NUM_COLUMNS];
-
-componentes InitBoard(componentes array[][NUM_COLUMNS])
+void InitBoard()
 {
+	board = new char*[NUM_COLUMNS];
+	
+	for (int i = 0; i < NUM_COLUMNS; i++)
+	{
+		board[i] = new char [NUM_ROWS];
+	}
 	int bloques = x;
+	if (bloques > (NUM_ROWS-2) / 2) {
+		bloques = (NUM_ROWS-2) / 2;
+	}	
 	for (int i = 0; i <= NUM_COLUMNS;i++) //Primero los bordes del tablero
 	{
-		array[0][i] = componentes::borde_lateral;
-
+		board[0][i] = '|';
 	}
 	for (int i = 1; i <= NUM_ROWS; i++)
 	{
-		array[i][0] = componentes::borde_inferior;
-
+		board[i][0] = '_';
 	}
-	for (int i = 1; i < NUM_ROWS >0; i++) // Luego rellenamos el tablero de bloques y de vacio
+	for (int i = 1; i <NUM_ROWS-1; i++) // Luego rellenamos el tablero de bloques y de vacio
 	{ 
-		for (int j = 1; j < NUM_COLUMNS >0; j++)
+		for (int j = 1; j < NUM_COLUMNS-1; j++)
 		{
-			if (bloques > 0)
+			if (i <=bloques+1)
 			{
-				array[i][j] = componentes::bloque;
+				board[i][j] = '@';
 			}
 			else {
-				array[i][j] = componentes::vacio;
-			}
-			
+				board[i][j] = ' ';
+			}			
 		}
-
 	}
-
-
 }
 
-componentes PrintBoard(componentes array[][NUM_COLUMNS])
-{
-	
+void PrintBoard()
+{	
+	for (int i = 0; i < NUM_COLUMNS; i++) {
+		for (int j = 0; j < NUM_ROWS; j++) {
+			std::cout << board[i][j] <<std::endl;
+		}
+	}
 }
